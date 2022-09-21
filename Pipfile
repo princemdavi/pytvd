@@ -10,6 +10,7 @@ pytube = "*"
 pydub = "*"
 ffmpeg-python = "*"
 gunicorn = "*"
+requests = "*"
 
 [dev-packages]
 
