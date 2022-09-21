@@ -50,7 +50,7 @@ async def download(url: str, media: str, itag: str | None = None):
 @app.get("/playlist")
 async def get_playlist(url: str):
   p = Playlist(url)
-  video_urls = p.video_urls.gen[:3]
+  video_urls = p.video_urls.gen
   #videos = p.videos
   videos = []
   for video_url in video_urls:
