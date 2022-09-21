@@ -53,7 +53,7 @@ class YoutubeVideo():
     astream = jsonable_encoder(self.video.streams.get_audio_only()) #best audio stream
     
     fvstreams = [] #filtered video streams
-    mastream = {"itag": astream["itag"], "formatted_size": self.convert_bytes(astream["_filesize"]), "raw_size": astream["_filesize"]} #modified audio stream
+    mastream = {"itag": astream["itag"], "size": self.convert_bytes(astream["_filesize"])} #modified audio stream
     
     for vstream in vstreams:
       #extract res property from vstreams dicts
@@ -61,7 +61,7 @@ class YoutubeVideo():
       #if the vstream res is already in the fvstreams, we skip appending it to the list
       if not vstream["resolution"] or vstream["resolution"] in resolutions or not vstream["_filesize"] or "avc1." not in vstream["codecs"][0]: continue
       
-      fvstreams.append({"itag": vstream["itag"], "res": vstream["resolution"], "formatted_size": self.convert_bytes(vstream["_filesize"] + astream["_filesize"]), "raw_size": vstream["_filesize"] + astream["_filesize"]})
+      fvstreams.append({"itag": vstream["itag"], "res": vstream["resolution"], "size": self.convert_bytes(vstream["_filesize"] + astream["_filesize"])})
    
     return {"video": fvstreams, "audio": mastream}
   def download_audio(self):
