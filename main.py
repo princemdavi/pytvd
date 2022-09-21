@@ -1,4 +1,4 @@
-import uvicorn
+import uvicorn 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -31,7 +31,7 @@ async def get_video(url: str):
 @app.get("/download")
 async def download(url: str, media: str, itag: str | None = None):
   
-  if media == "video":
+  if media == "video": 
     if not itag: return "please provide itag of the video to be downloaded"
     
   yt = YoutubeVideo(url)
@@ -51,12 +51,12 @@ async def download(url: str, media: str, itag: str | None = None):
 async def get_playlist(url: str):
   p = Playlist(url)
   video_urls = p.video_urls.gen
-  videos = []
-  for video_url in video_urls:
+  #videos = []
+  """for video_url in video_urls:
     yt = YoutubeVideo(video_url)
     videoDetails = yt.get_details()
     streams = yt.get_streams()
     
-    videos.append({"videoDetails": videoDetails, "formats": streams})
+    videos.append({"videoDetails": videoDetails, "formats": streams})"""
     
-  return videos
+  return video_urls
