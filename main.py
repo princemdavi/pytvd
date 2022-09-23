@@ -20,7 +20,7 @@ app.add_middleware(
 async def index():
    return "welcome to pytvd api"
 
-@app.get("/search"):
+@app.get("/search")
 async def search(q: str):
   search = Search(q)
   return search.results
