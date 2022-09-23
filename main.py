@@ -1,9 +1,9 @@
-import uvicorn 
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import os
-from pytube import YouTube, Playlist
+from pytube import YouTube, Playlist, Search
 from youtubevideo import YoutubeVideo
 
 app = FastAPI()
@@ -20,6 +20,11 @@ app.add_middleware(
 async def index():
    return "welcome to pytvd api"
 
+@app.get("/search"):
+async def search(q: str):
+  search = Search(q)
+  return search.results
+  
 @app.get("/video")
 async def get_video(url: str):
   yt = YoutubeVideo(url)
@@ -51,5 +56,14 @@ async def download(url: str, media: str, itag: str | None = None):
 async def get_playlist(url: str):
   p = Playlist(url)
   video_urls = p.video_urls.gen
+  
+  videos = []
+  
+  for video_url in video_urls:
+    yt = YoutubeVideo(video_url)
+    videoDetails = yt.get_details()
+    streams = yt.get_streams()
+    
+    videos.append({"videoDetails": videoDetails, "formats": streams})
     
   return video_urls
