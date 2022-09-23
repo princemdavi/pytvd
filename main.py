@@ -66,4 +66,4 @@ async def get_playlist(url: str):
     
     videos.append({"videoDetails": videoDetails, "formats": streams})
     
-  return video_urls
+  return videos
