@@ -43,7 +43,7 @@ async def download(url: str, media: str, background_tasks=BackgroundTasks, itag:
     if not itag: return "please provide itag of the video to be downloaded"
     
   yt = YoutubeVideo(url)
-  title = yt.title
+  title = yt.video.title
   
   if media == "audio":
     audio_path = yt.download_audio()
