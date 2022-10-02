@@ -2,6 +2,7 @@ from pytube import YouTube
 import ffmpeg
 from fastapi.encoders import jsonable_encoder
 import os
+from datetime import datetime
 from math import floor, ceil
 import uuid
 
@@ -34,7 +35,7 @@ class YoutubeVideo():
     title = self.video.title
     thumbnail = self.video.thumbnail_url
     duration = self.seconds_to_time(self.video.length)
-    publish_date = self.video.publish_date
+    publish_date = datetime.strftime(self.video.publish_date, '%d.%m.%Y')
     views = self.num_formatter(self.video.views)
     author = self.video.author
     

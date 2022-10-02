@@ -3,7 +3,6 @@ from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import os
-from datetime import datetime
 from pytube import YouTube, Playlist, Search
 from youtubevideo import YoutubeVideo
 
