@@ -46,6 +46,7 @@ class YoutubeVideo():
       "duration": duration,
       "views": views,
       "thumbnail": thumbnail,
+      "video_url": self.url,
     }
     return video_details
   def get_streams(self):
