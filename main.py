@@ -48,11 +48,14 @@ async def download(url: str, media: str, background_tasks=BackgroundTasks, itag:
   if media == "audio":
     audio_path = yt.download_audio()
     # background_tasks.add_task(remove_file, path=audio_path)
-    return FileResponse(path = audio_path, filename = f"{title}.mp3")
+    # return FileResponse(path = audio_path, filename = f"{title}.mp3")
+
+    return "file downloaded successfully"
   elif media == "video":
     video_path = yt.download_video(itag)
     # background_tasks.add_task(remove_file, path=video_path)
-    return FileResponse(path = video_path, filename = f"{title}.mp4")
+    # return FileResponse(path = video_path, filename = f"{title}.mp4")
+    return "file downloaded successfully"
   else:
     return "media query parameter can only be audio or video"
 
