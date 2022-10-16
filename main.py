@@ -34,5 +34,5 @@ async def download(id: str, itag: str):
   title = yt.video.title
   file = yt.download(itag)
   
-  return file.path
+  return file.get("path")
  
