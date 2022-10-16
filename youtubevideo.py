@@ -69,7 +69,7 @@ class YoutubeVideo():
     
   def download(self, itag):
     stream = self.video.streams.get_by_itag(itag)
-    return jsonable_encoder(stream)
+    print(jsonable_encoder(stream))
     if stream.only_audio:
       filename = f"{uuid.uuid4()}.mp3"
     
