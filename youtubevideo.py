@@ -76,7 +76,7 @@ class YoutubeVideo():
       audio_path = stream.download(output_path="downloads/", filename=filename)
       return {"type": "audio", "path": audio_path}
       
-    elif stream.video_codec && not stream.audio_codec:
+    elif stream.video_codec and not stream.audio_codec:
       audio_filename = f"{uuid.uuid4()}.mp4"
       video_filename = f"{uuid.uuid4()}.mp4"
       audio_video_path = f"downloads/{uuid.uuid4()}.mp4"
