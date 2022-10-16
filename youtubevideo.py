@@ -66,29 +66,35 @@ class YoutubeVideo():
       fvstreams.append({"itag": vstream["itag"], "res": vstream["resolution"], "size": self.convert_bytes(vstream["_filesize"] + astream["_filesize"])})
    
     return {"video": fvstreams, "audio": mastream}
-  def download_audio(self):
-    filename = f"{uuid.uuid4()}.mp3"
     
-    audio_stream = self.video.streams.get_audio_only()
-    audio_path = audio_stream.download(output_path="downloads/", filename=filename)
-   
-    return audio_path
-  def download_video(self, itag):
-    audio_filename = f"{uuid.uuid4()}.mp4"
-    video_filename = f"{uuid.uuid4()}.mp4"
-    audio_video_path = f"downloads/{uuid.uuid4()}.mp4"
+  def download(self, itag):
+    stream = self.video.streams.get_by_itag(itag)
     
-    video_stream = self.video.streams.get_by_itag(itag)
-    audio_stream = self.video.streams.get_audio_only()
+    if stream.only_audio:
+      filename = f"{uuid.uuid4()}.mp3"
     
-    video_path = video_stream.download(output_path="downloads/", filename=video_filename)
-    audio_path = audio_stream.download(output_path="downloads/", filename=audio_filename)
+      audio_path = stream.download(output_path="downloads/", filename=filename)
+      return {"type": "audio", "path": audio_path}
+      
+    elif stream.only_video:
+      audio_filename = f"{uuid.uuid4()}.mp4"
+      video_filename = f"{uuid.uuid4()}.mp4"
+      audio_video_path = f"downloads/{uuid.uuid4()}.mp4"
     
-    input_video = ffmpeg.input(video_path).video
-    input_audio = ffmpeg.input(audio_path).audio
+      audio_stream = self.video.streams.get_audio_only()
     
-    ffmpeg.output(input_video, input_audio, audio_video_path, vcodec='copy', acodec="copy").run()
+      video_path = stream.download(output_path="downloads/", filename=video_filename)
+      audio_path = audio_stream.download(output_path="downloads/", filename=audio_filename)
     
-    os.remove(video_path)
-    os.remove(audio_path)
-    return audio_video_path
+      input_video = ffmpeg.input(video_path).video
+      input_audio = ffmpeg.input(audio_path).audio
+    
+      ffmpeg.output(input_video, input_audio, audio_video_path, vcodec='copy', acodec="copy").run()
+    
+      os.remove(video_path)
+      os.remove(audio_path)
+      
+      return {"type": "video", "path": audio_video_path}
+      
+    else:
+      return {"type": null, "path": ""}

@@ -7,10 +7,8 @@ name = "pypi"
 fastapi = "*"
 uvicorn = "*"
 pytube = "*"
-pydub = "*"
 ffmpeg-python = "*"
 gunicorn = "*"
-requests = "*"
 
 [dev-packages]
 
