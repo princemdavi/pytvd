@@ -17,7 +17,7 @@ class YoutubeVideo():
               return "%3.1f %s" % (size, i)
           size /= 1024.0
 
-      return filesize
+      return size
   def num_formatter(self, num):
     num = float('{:.3g}'.format(num))
     magnitude = 0
@@ -97,4 +97,4 @@ class YoutubeVideo():
       return {"type": "video", "path": audio_video_path}
       
     else:
-      return {"type": null, "path": ""}
+      return {"type": "none", "path": ""}

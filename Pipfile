@@ -9,6 +9,7 @@ uvicorn = "*"
 pytube = "*"
 ffmpeg-python = "*"
 gunicorn = "*"
+pydrive2 = "*"
 
 [dev-packages]
 
