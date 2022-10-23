@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-import os
+from youtubesearchpython import ResultMode, VideosSearch, Playlist, Suggestions
 from youtubevideo import YoutubeVideo
 from pydrive import upload_file
 
@@ -19,6 +19,30 @@ app.add_middleware(
 @app.get('/')
 async def index():
     return "welcome to pytvd api"
+
+
+@app.get('/suggestions')
+async def get_suggestions(term: str):
+    suggestions = Suggestions(language='en', region='US')
+
+    results = suggestions.get(term)['result']
+    return results
+
+
+@app.get('/search')
+async def search_video(term: str):
+    search = VideosSearch(term, limit=20)
+    results = search.result()['result']
+
+    return results
+
+
+@app.get('/playlist/{id}')
+async def get_playlist(id: str):
+    playlist_videos = Playlist.getVideos(
+        f"https://www.youtube.com/playlist?list={id}", limit=20)
+
+    return playlist_videos
 
 
 @app.get("/info/{id}")

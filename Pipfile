@@ -10,6 +10,7 @@ pytube = "*"
 ffmpeg-python = "*"
 gunicorn = "*"
 pydrive2 = "*"
+youtube-search-python = "*"
 
 [dev-packages]
 
