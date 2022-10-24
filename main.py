@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from youtubesearchpython import ResultMode, VideosSearch, Playlist, Suggestions
+from youtubesearchpython import (VideosSearch, Playlist, Suggestions)
 from youtubevideo import YoutubeVideo
+from dotenv import load_dotenv
 from pydrive import upload_file
 
 app = FastAPI()
+
+load_dotenv()
 
 app.add_middleware(
     CORSMiddleware,
@@ -62,5 +65,5 @@ async def download(id: str, itag: str):
     title = yt.video.title
     file = yt.download(itag)
 
-    upload_file(file.get("path"))
+    upload_file(file.get("path"), title)
     return "file downloaded successfully"

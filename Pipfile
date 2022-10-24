@@ -11,6 +11,8 @@ ffmpeg-python = "*"
 gunicorn = "*"
 pydrive2 = "*"
 youtube-search-python = "*"
+motor = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
