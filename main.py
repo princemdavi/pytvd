@@ -66,8 +66,7 @@ async def download(id: str, itag: str):
     title = yt.video.title
     file = yt.download(itag)
 
-    uploaded_file_id = upload_file(file.get("path"))
+    uploaded_file_id = upload_file(file.get("path"), title)
     file_id = insert_file(title, itag, uploaded_file_id)
 
-    # return f"https://dl.pytvd.com/file?{file_id}"
-    return f"wow"
+    return f"https://dl.pytvd.com/file?{file_id}"
