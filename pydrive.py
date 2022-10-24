@@ -1,3 +1,4 @@
+from uuid import uuid4
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
 
@@ -20,8 +21,10 @@ gauth = login_with_service_account()
 drive = GoogleDrive(gauth)
 
 
-def upload_file(path: str, title: str):
+def upload_file(path: str):
+    title = uuid4()
     file = drive.CreateFile(
         {"title": title, "parents": [{"kind": "drive#fileLink", 'teamDriveId': "0AMQ275zHBB7zUk9PVA", "id": "1TCimBq8GinCDyigH1_2oEouf1CkHIxnA"}]})
     file.SetContentFile(path)
     file.Upload(param={'supportsTeamDrives': True})
+    return title
