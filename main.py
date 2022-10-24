@@ -69,4 +69,5 @@ async def download(id: str, itag: str):
     uploaded_file_id = upload_file(file.get("path"))
     file_id = insert_file(title, itag, uploaded_file_id)
 
-    return f"https://dl.pytvd.com/file?{file_id}"
+    # return f"https://dl.pytvd.com/file?{file_id}"
+    return f"wow"
