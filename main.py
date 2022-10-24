@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from youtubesearchpython import (VideosSearch, Playlist, Suggestions)
-from api.database import insert_file
+from database import insert_file
 from youtubevideo import YoutubeVideo
 from dotenv import load_dotenv
 from pydrive import upload_file
