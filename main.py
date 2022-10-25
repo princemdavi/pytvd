@@ -61,7 +61,7 @@ async def download(id: str, itag: str):
     # check if file has been downloaded already
     file = await get_file(id, itag)
     if file:
-        return f"https://dl.pytvd.com/file?{file['_id']}"
+        return f"https://dl.pytvd.com/file?{file['_id']}&title={file['title']}"
 
     url = f"https://youtube.com/watch?v={id}"
     yt = YoutubeVideo(url)
