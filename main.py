@@ -62,7 +62,7 @@ async def download(id: str, itag: str):
     yt = YoutubeVideo(url)
     title = yt.video.title
     file = yt.download(itag)
-    file_id = f"{title}@{uuid4()}"
+    file_id = file['path'].split("/")[1]
     upload_file(file.get("path"), file_id)
     inserted_file = await insert_file(title, itag, file_id)
     return f"https://dl.pytvd.com/file?{inserted_file}"
