@@ -61,7 +61,7 @@ async def download(id: str, itag: str):
     # check if file has been downloaded already
     file = await get_file(id, itag)
     if file:
-        return f"https://pytvdd.herokuapp.com/dl?file={file['file_id']}&title={file['title']}"
+        return f"https://pytvdd.herokuapp.com/download?file={file['file_id']}&title={file['title']}"
 
     url = f"https://youtube.com/watch?v={id}"
     yt = YoutubeVideo(url)
@@ -70,4 +70,4 @@ async def download(id: str, itag: str):
     file_id = file['path'].split("/")[1]
     upload_file(file.get("path"), file_id)
     inserted_file = await insert_file(title, itag, file_id, id)
-    return f"https://dl.pytvd.com/file?{inserted_file}"
+    return f"https://pytvdd.herokuapp.com/download?file={file_id}&title={title}"
