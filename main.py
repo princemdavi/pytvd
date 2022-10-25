@@ -1,3 +1,4 @@
+from uuid import uuid4
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -28,7 +29,6 @@ async def index():
 @app.get('/suggestions')
 async def get_suggestions(term: str):
     suggestions = Suggestions(language='en', region='US')
-
     results = suggestions.get(term)['result']
     return results
 
@@ -37,7 +37,6 @@ async def get_suggestions(term: str):
 async def search_video(term: str):
     search = VideosSearch(term, limit=20)
     results = search.result()['result']
-
     return results
 
 
@@ -45,7 +44,6 @@ async def search_video(term: str):
 async def get_playlist(id: str):
     playlist_videos = Playlist.getVideos(
         f"https://www.youtube.com/playlist?list={id}", limit=20)
-
     return playlist_videos
 
 
@@ -55,7 +53,6 @@ async def get_video_info(id: str):
     yt = YoutubeVideo(url)
     videoDetails = yt.get_details()
     streams = yt.get_streams()
-
     return {"videoDetails": videoDetails, "formats": streams}
 
 
@@ -65,8 +62,7 @@ async def download(id: str, itag: str):
     yt = YoutubeVideo(url)
     title = yt.video.title
     file = yt.download(itag)
-
-    uploaded_file_id = upload_file(file.get("path"), title)
-    file_id = await insert_file(title, itag, uploaded_file_id)
-
-    return f"https://dl.pytvd.com/file?{file_id}"
+    file_id = f"{title}@{uuid4()}"
+    upload_file(file.get("path"), file_id)
+    inserted_file = await insert_file(title, itag, file_id)
+    return f"https://dl.pytvd.com/file?{inserted_file}"

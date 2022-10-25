@@ -21,9 +21,8 @@ gauth = login_with_service_account()
 drive = GoogleDrive(gauth)
 
 
-def upload_file(path: str, title: str):
+def upload_file(path: str, file_id: str):
     file = drive.CreateFile(
-        {"title": title, "parents": [{"kind": "drive#fileLink", 'teamDriveId': "0AMQ275zHBB7zUk9PVA", "id": "1TCimBq8GinCDyigH1_2oEouf1CkHIxnA"}]})
+        {"title": file_id, "parents": [{"kind": "drive#fileLink", 'teamDriveId': "0AMQ275zHBB7zUk9PVA", "id": "1TCimBq8GinCDyigH1_2oEouf1CkHIxnA"}]})
     file.SetContentFile(path)
     file.Upload(param={'supportsTeamDrives': True})
-    return title
