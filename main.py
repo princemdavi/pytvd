@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from youtubesearchpython import (VideosSearch, Playlist, Suggestions)
-from database import insert_file
+from database import insert_file, get_file
 from youtubevideo import YoutubeVideo
 from dotenv import load_dotenv
 from pydrive import upload_file
@@ -58,6 +58,12 @@ async def get_video_info(id: str):
 
 @app.get("/download/{id}/{itag}")
 async def download(id: str, itag: str):
+    # check if file has been downloaded already
+    file = await get_file(id, itag)
+    if file:
+        print(file)
+        return f"https://dl.pytvd.com/file?{file['title']}"
+
     url = f"https://youtube.com/watch?v={id}"
     yt = YoutubeVideo(url)
     title = yt.video.title

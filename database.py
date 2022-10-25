@@ -16,4 +16,5 @@ async def insert_file(title: str, itag: str, file_id: str, video_id: str):
 
 
 async def get_file(video_id: str, itag: str):
-    pass
+    file = await File.find_one({"video_id": video_id, "itag": itag})
+    return file
