@@ -9,9 +9,11 @@ database = client.pytvd
 
 File = database.get_collection("files")
 
-async def insert_file(title: str, itag: str, file_id: str, video_id: str):
-    new_file = await File.insert_one({"title": title, "video_id": video_id, "itag": itag, "file_id": file_id})
+
+async def insert_file(file):
+    new_file = await File.insert_one({"title": file.get("title"), "video_id": file.get("video_id"), "itag": file.get("itag"), "file_id": file.get("file_id"), "file_size": file.get("file_size"), "ext": file.get("ext")})
     return new_file.inserted_id
+
 
 async def get_file(video_id: str, itag: str):
     file = await File.find_one({"video_id": video_id, "itag": itag})
