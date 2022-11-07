@@ -62,7 +62,7 @@ async def download(id: str, itag: str):
     # check if file has been downloaded already
     file = await get_file(id, itag)
     if file:
-        return f"https://pytvdd.herokuapp.com/download?file={file['file_id']}&title={file['title']}.{file['ext']}&size={file['file_size']}"
+        return f"https://pytvdd.herokuapp.com/download?file={file['_id']}"
 
     url = f"https://youtube.com/watch?v={id}"
     yt = YoutubeVideo(url)
@@ -72,6 +72,6 @@ async def download(id: str, itag: str):
     file_size = os.path.getsize(file.get("path"))
     file_ext = "mp3 "if file.get("type") == "audio" else "mp4"
 
-    await insert_file({"title": title, "itag": itag, "file_id": file_id, "video_id": id, "file_size": file_size, "ext": file_ext})
+    inserted_id = await insert_file({"title": title, "itag": itag, "file_id": file_id, "video_id": id, "file_size": file_size, "ext": file_ext})
 
-    return f"https://pytvdd.herokuapp.com/download?file={file_id}&title={title}.{file_ext}&size={file_size}"
+    return f"https://pytvdd.herokuapp.com/download?file={inserted_id}"
