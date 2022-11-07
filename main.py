@@ -67,6 +67,7 @@ async def download(id: str, itag: str):
     yt = YoutubeVideo(url)
     title = yt.video.title
     file = yt.download(itag)
-    file_id = upload_file(file.get("path"))
-    await insert_file(title, itag, file_id, id)
-    return f"https://pytvdd.herokuapp.com/download?file={file_id}&title={title}"
+    file_url = upload_file(file.get("path"))
+    return file_url
+    # await insert_file(title, itag, file_id, id)
+    # return f"https://pytvdd.herokuapp.com/download?file={file_id}&title={title}"

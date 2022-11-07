@@ -27,4 +27,8 @@ def upload_file(path: str):
         {"title": file_id, "parents": [{"kind": "drive#fileLink", 'teamDriveId': "0AMQ275zHBB7zUk9PVA", "id": "1TCimBq8GinCDyigH1_2oEouf1CkHIxnA"}]})
     file.SetContentFile(path)
     file.Upload(param={'supportsTeamDrives': True})
-    return file['id']
+    file.InsertPermission({
+        'type': 'anyone',
+        'value': 'anyone',
+        'role': 'reader'})
+    return file['webContentLink']
