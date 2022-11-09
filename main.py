@@ -75,3 +75,11 @@ async def download(id: str, itag: str):
     inserted_id = await insert_file({"title": title, "itag": itag, "file_id": file_id, "video_id": id, "file_size": file_size, "ext": file_ext})
 
     return f"https://pytvdd.herokuapp.com/download?file={inserted_id}"
+
+
+@app.get("/stream/{id}")
+async def get_stream(id: str):
+    url = f"https://youtube.com/watch?v={id}"
+    yt = YoutubeVideo(url)
+    streaming_data = yt.streaming_data()
+    return streaming_data
