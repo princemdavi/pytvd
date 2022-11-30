@@ -3,7 +3,8 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from youtubesearchpython import (VideosSearch, Playlist, Suggestions)
+from youtubesearchpython import (
+    VideosSearch, Playlist, Suggestions, PlaylistsSearch)
 from database import insert_file, get_file
 from youtubevideo import YoutubeVideo
 from dotenv import load_dotenv
@@ -34,9 +35,16 @@ async def get_suggestions(term: str):
     return results
 
 
-@app.get('/search')
+@app.get('/search/videos')
 async def search_video(term: str):
     search = VideosSearch(term, limit=20)
+    results = search.result()['result']
+    return results
+
+
+@app.get("/search/playlists")
+async def search_for_playlists(term: str):
+    search = PlaylistsSearch(term, limit=20)
     results = search.result()['result']
     return results
 
@@ -70,7 +78,7 @@ async def download(id: str, itag: str):
     file = yt.download(itag)
     file_id = upload_file(file.get("path"))
     file_size = os.path.getsize(file.get("path"))
-    file_ext = "mp3 "if file.get("type") == "audio" else "mp4"
+    file_ext = "mp3" if file.get("type") == "audio" else "mp4"
 
     inserted_id = await insert_file({"title": title, "itag": itag, "file_id": file_id, "video_id": id, "file_size": file_size, "ext": file_ext})
 
